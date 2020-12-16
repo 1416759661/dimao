@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-input-row label{
+				width: 100px;
+				text-align: right;
+				padding: 0;
+				margin: 0;
+				line-height:42px;
+			}
+			.mui-input-row span{
+				line-height:42px;
+			}
+			.prolist{
+				padding: 20px;
+			}
+			.prolist p{
+				line-height: 20px;
+				font-size: 16px;
+				border-bottom: solid 1px #ccc;
+				padding-bottom: 10px;
+			}
+			p.title{
+				margin:0 20px;
+				border-bottom: solid 1px #ccc;
+				padding:10px 0;
+				font-weight: bolder;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">订单明细</h1>
+		</header>
+		<div class="mui-content" style="font-size: 16px;">
+		    <form class="mui-input-group">
+		    	<p class="title">收货信息</p>
+		    	<div class="mui-input-row" >
+		    		<label>订单号：</label>
+		          	<span id="tborderid"> 202020202020</span>
+		          	
+		        </div>
+		        <div class="mui-input-row">
+		            <label>收货人：</label>
+		          	<span id="tbsname"></span>
+		          	
+		        </div>
+		        <div class="mui-input-row">
+		            <label>电话：</label>
+		            <span id="tbstel"></span>
+		        </div>
+		        <div class="mui-input-row">
+		            <label>地址：</label>
+		           <span id="tbsaddress"></span>
+		        </div>
+		         <div class="mui-input-row">
+		            <label> 下单时间：</label>
+		          	<span id="tbctime"></span>
+		        </div>
+		        <div class="mui-input-row">
+		            <label style="font-weight: bolder;"> 总金额：</label>
+		          	<span id="tbsumprice"></span>
+		        </div>
+		        <p class="title">购买物品</p>
+		        <div class="prolist" id="prolistbox">
+			        <!--<p>华为手机 4999.00x1=4999</p>-->
+			       
+		        </div>
+		    </form>
+		</div>
+		
+		<script src="js/mui.min.js"></script>
+     <script type="text/javascript" charset="utf-8">
+      	mui.init();
+        mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			var orderid = self.orderid;
+		    var requrl=localStorage.getItem("requrl");	
+		    //var requrl="http://49.235.71.166:8080/DimaoManage/JavaApi"
+			mui.ajax(requrl,{
+				data:{
+					rnum:"11",
+              		orderid:orderid
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				headers:{'Content-Type':'application/x-www-form-urlencoded'},
+				success:function(data){
+					document.getElementById("tborderid").innerHTML=	data.orderhead.orderid;	
+					document.getElementById("tbsname").innerHTML=	data.orderhead.sname;	
+					document.getElementById("tbstel").innerHTML=	data.orderhead.stel;	
+					document.getElementById("tbsaddress").innerHTML=	data.orderhead.saddress;	
+					document.getElementById("tbctime").innerHTML=	data.orderhead.ctime;	
+					document.getElementById("tbsumprice").innerHTML="<b>￥"+data.orderhead.sumprice+".00</b>";	
+					
+					console.log(JSON.stringify(data));
+					data.orderitems.forEach(function(item,index){
+						document.getElementById("prolistbox").innerHTML+="<p><img style='width:50px;' src='http://49.235.71.166:8080/DimaoManage/upload/"+item.imgurl+"'>"+item.proname+"_"+item.price+"x"+item.procount+"</p>";
+					});
+					
+				}
+			});
+		});
+		
+		
+    </script>
+	</body>
+
+</html>

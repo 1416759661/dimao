@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.mui-card-footer, .mui-card-header{
+				min-height: 53px;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">我的订单</h1>
+		</header>
+		<div class="mui-content">
+		    <div class="mui-scroll-wrapper">
+		        <div class="mui-scroll">
+		        	<div id="listbox" style="margin-top: 50px;">
+				        <!--<div class="mui-card" style="margin-top: 50px;">
+							<div class="mui-card-header mui-card-media">
+								<img src="img/user01.png" />
+								<div class="mui-media-body">
+									订单编号：20201030010101 <br/>订单金额：<span style="color: red;">10009.00</span>元
+								</div>
+							</div>
+							<div class="mui-card-content" style="margin: 10px;">
+								收货人：张三<br/> 
+								地址：重庆市巴南区<br/>
+								电话：15399888899<br/>								
+							</div>
+							<div class="mui-card-footer">
+								<a class="mui-card-link">查看详细</a>下单时间： 2016-06-30 15:30
+							</div>
+						</div>-->
+					</div>
+		        </div>
+		    </div>
+		    
+			
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
+      
+			mui('.mui-scroll-wrapper').scroll({
+				indicators: false, //是否显示滚动条
+				deceleration:0.00006, //阻尼系数,系数越小滑动越灵敏
+				bounce: true //是否启用回弹
+			});
+			mui.plusReady(function(){
+				binddata();
+			});
+			
+			
+			function binddata(){
+				//刷新购物车
+				var car= plus.webview.getWebviewById("car.html");
+				mui.fire(car,'cardatainit');
+				//绑定订单信息
+				var requrl=localStorage.getItem("requrl");	
+				var userid=localStorage.getItem("userid");	
+				mui.ajax(requrl,{
+					data:{
+						rnum:"10",
+                  		userid:userid
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/x-www-form-urlencoded'},
+					success:function(data){
+						binditemdata(data);
+						console.log(JSON.stringify(data));
+					}
+				});
+			}
+			
+			/*
+			 <!--<div class="mui-card" style="margin-top: 50px;">
+							<div class="mui-card-header mui-card-media">
+								<img src="img/user01.png" />
+								<div class="mui-media-body">
+									订单编号：20201030010101 <br/>订单金额：<span style="color: red;">10009.00</span>元
+								</div>
+							</div>
+							<div class="mui-card-content" style="margin: 10px;">
+								收货人：张三<br/> 
+								地址：重庆市巴南区<br/>
+								电话：15399888899<br/>
+								
+							</div>
+							<div class="mui-card-footer">
+								<a class="mui-card-link">查看详细</a>下单时间： 2016-06-30 15:30
+							</div>
+						</div>--> 
+			 
+			*/
+			function binditemdata(data)
+			{
+				var html="";
+				data.forEach(function(item,index){
+					html+='<div class="mui-card" title="'+item.orderid+'">';
+					html+='<div class="mui-card-header mui-card-media">';
+					html+='<img src="img/user01.png" />';
+					html+='<div class="mui-media-body">';
+					html+='订单编号：'+item.orderid+' <br/>订单金额：<span style="color: red;">'+item.sumprice+'</span>元';
+					html+="</div>";
+					html+="</div>";
+					html+='<div class="mui-card-content" style="margin: 10px;">';
+					html+='收货人：'+item.sname+'<br/> ';
+					html+='地址：'+item.saddress+'<br/>';
+					html+='电话：'+item.stel+'<br/>';
+					html+="</div>";
+					html+='<div class="mui-card-footer">';
+					html+='<a class="mui-card-link">查看详细</a>下单时间:'+item.ctime;
+					html+='</div>';
+					html+='</div>';
+				});
+				document.getElementById("listbox").innerHTML=html;
+			}
+			
+			mui("#listbox").on("tap",".mui-card",function(){
+				var orderid=this.getAttribute("title");
+				mui.openWindow({
+					url:"myorderview.html",
+					id:"myorderview.html",
+					extras:{
+				     	orderid:orderid
+				    }
+				});
+			});
+		</script>
+	</body>
+
+</html>

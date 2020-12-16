@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>关于我们</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			p{
+				text-indent: 2em;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">关于我们</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<p>地猫软件是夜鹰教程网旗下的一款用于教学演示的APP，开发者是汤燕老师。本软件集成了XXX等功能。汇集教学和娱乐为一体。</p>
+				<p>免责声明：本软件纯属教学演示用,不存在实际交易。</p>
+				<p>本软件可能会收集你的隐私信息，主要包括：姓名、学号、手机号等，如果介意，请立即卸载。</p>
+				<p>请不要通过该软件支付任何订单费用！</p>
+				<p>技术支持:</p>
+				<p>微信号：yyjcw10000 QQ：1416759661 </p>
+				<p>加盟热线：15397600032</p>
+				<p><img src="img/wxcode.png" style="width: 60%;margin: 0 auto;display: block;" /></p>
+				<input type="button" id="btnclose" value="关闭" />
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		mui.plusReady(function () {
+			if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE){
+				mui.toast("当前网络不给力");
+			}
+		});		
+
+		//处理点击事件，需要打开原生浏览器
+		mui('body').on('tap', 'a', function(e) {
+			var href = this.getAttribute('href');
+			if (href) {
+				if (window.plus) {
+					plus.runtime.openURL(href);
+				} else {
+					location.href = href;
+				}
+			}
+		});
+		
+		document.getElementById("btnclose").addEventListener("tap",function(){
+			
+			mui.back();
+		});
+
+	</script>
+
+</html>

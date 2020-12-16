@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			#btnlogin{
+				width:calc(100% - 20px);
+				background-color: #eee;
+				display: block;
+				margin: 20px auto;
+				border-radius: 5px;
+				height: 40px;
+				
+			}
+			.dm-nav{
+				text-align: center;
+				padding: 0 5px;
+				line-height: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+		  <ul class="mui-table-view">
+		          <li class="mui-table-view-cell">
+		              <a class="mui-navigate-right" href="myorderlist.html">
+		                  	我的订单
+		              </a>
+		          </li>
+		          <li class="mui-table-view-cell">
+		              <a class="mui-navigate-right">
+		                  	修改密码
+		              </a>
+		          </li>
+		          <li class="mui-table-view-cell">
+		              <a class="mui-navigate-right">
+		                  	意见反馈
+		              </a>
+		          </li>
+		          <li class="mui-table-view-cell">
+		              <a class="mui-navigate-right" href="aboutus.html">
+		                  	关于我们
+		              </a>
+		          </li>
+		          <li class="mui-table-view-cell" id="logout">
+		              <a class="mui-navigate-right" href="login.html">
+		                   	退出系统
+		              </a>
+		          </li>
+		      </ul>
+		</div>
+		
+	<script src="js/mui.min.js"></script>
+     <script type="text/javascript" charset="utf-8">
+      	mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+      	mui.plusReady(function(){
+//    		var userid=localStorage.getItem("userid");
+//    		console.log(userid);
+//    		if(userid==null)
+//    		{
+//    			 mui.openWindow({
+//		        	url :"login.html",
+//		        	id  :"login.html"
+//		        });
+//		        return false;
+//    		}
+      		
+		    mui(".mui-table-view").on('tap',"a",function(e){
+		    	var urlname=this.href;
+		    	if(urlname=="login.html")
+		    	{
+		    		localStorage.removeItem("id");
+		    		localStorage.removeItem("truename");
+		    		localStorage.removeItem("username");
+		    		localStorage.removeItem("tel");
+		    		localStorage.removeItem("address");
+		    	}
+		    	
+		        mui.openWindow({
+		        	url :urlname,
+		        	id  :urlname
+		        });
+		        
+		    });
+		    
+		    
+		    
+		    document.getElementById("logout").addEventListener("tap",function(){
+		    	localStorage.clear();
+		    	mui.openWindow({
+		    		url:"login.html",
+		    		id:"login.html"
+		    	})
+		    });
+		});
+		
+		
+		
+		
+		
+    </script>
+	</body>
+
+</html>

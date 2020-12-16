@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			#btnlogin{
+				width:calc(100% - 20px);
+				background-color: #eee;
+				display: block;
+				margin: 20px auto;
+				border-radius: 5px;
+				height: 40px;
+				
+			}
+		
+			.dm-row{
+				height:50px;
+				line-height:35px;
+			}
+			.dm-row label{
+				float: left;
+				width: 80px;
+				text-align: right;
+			}
+			.dm-row input{
+				height:35px!important;
+				width:calc(100% - 80px);
+				float: left;
+			}
+			#orderbox{
+				transition: all 2s; 
+			}
+			.hide{
+				opacity: 0;			
+			}
+			.show{
+				opacity: 1;
+				display: block;
+			}
+			
+		.mui-table-view-cell{
+			position: relative;
+		}
+		.mui-table-view-cell span{
+			width: 30px;
+			height:30px;
+			float: left;
+			border: solid 1px #ccc;
+			text-align: center;
+			line-height: 30px;
+		}
+		.mui-table-view-cell input.buynum{
+			width: 30px;
+			height:30px;
+			float: left;
+			text-align: center;
+			line-height: 30px;
+			border: solid 1px #ccc;
+			color:#333;
+			border-left: 0;
+			border-right: 0;
+			border-radius: 0;
+		}
+		.mui-table-view-cell .numbox{
+			width:96px;
+			height:30px;
+			position: absolute;
+			right: 0px;
+			top: 20px;
+			z-index: 2;
+			padding: 0;
+			background-color:#fff;
+		}
+		#itembox{
+			padding: 10px;
+			margin:0 5px;
+		}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+		    <ul class="mui-table-view" id="itembox" style="margin-top: 20px;">
+		        <!--<li class="mui-table-view-cell mui-media">
+		            <a href="javascript:void(0);">
+		                <img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">
+		                <div class="mui-media-body">
+		                                        苹果12手机   <div class="numbox"><span class="btnjian">-</span><input type="text" class="buynum" value="1" style="padding: 2px;"/><span class="btnjia">+</span></div>
+		                    <p class="mui-ellipsis">价格：5880.00元</p>
+		                </div>
+		            </a>
+		        </li>-->
+		        
+		    </ul>
+		    <p style="margin: 0 5px; padding:10px 0;"><span>总价：</span><span id="sumpricebox"></span></p>
+		    <button type="button" class="mui-btn mui-btn-blue" style="width:calc(100% - 10px);margin: 5px; " id="btngotoprolist">继续购物</button>
+		    <button type="button" class="mui-btn mui-btn-blue" style="width:calc(100% - 10px);margin: 5px; " id="btngotopay">去结算</button>
+		    <div  id="orderbox" class="hide">
+		    	   <ul class="mui-table-view" >
+			            <li class="mui-table-view-cell dm-row">
+			                
+					            <label>收货人：</label>
+					            <input type="text" id="tbtruename" class="mui-input-clear" placeholder="用户名">
+					        
+			            </li>
+			            <li class="mui-table-view-cell dm-row">
+			               
+					            <label>电话：</label>
+					            <input type="text" id="tbtel" class="mui-input-clear" placeholder="用户名">
+					        
+			            </li>
+			            <li class="mui-table-view-cell dm-row">
+			                 
+					            <label>地址：</label>
+					            <input type="text" id="tbaddress" class="mui-input-clear" placeholder="用户名">
+					        
+			            </li>
+		           </ul>
+		           <button type="button" id="btnaddorder" class="mui-btn mui-btn-blue" style="width:calc(100% - 10px);margin: 5px; ">确定下单</button>
+			</div>
+		</div>
+	
+		<script src="js/mui.min.js"></script>
+     <script type="text/javascript" charset="utf-8">
+      
+      	mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+		
+		document.getElementById("btngotopay").addEventListener("tap",function(){
+			document.getElementById("orderbox").className="show";
+		});
+		
+		document.getElementById("btngotoprolist").addEventListener("tap",function(){
+			var main= plus.webview.getWebviewById("main.html");
+			mui.fire(main,'goprolist');
+		});
+		
+		mui.ready(function(){
+			bindcardata();		
+		});
+		
+		function bindcardata()
+		{
+			//var requrl="http://49.235.71.166:8080/DimaoManage/JavaApi"
+			var requrl=localStorage.getItem("requrl");
+			
+			var userid=localStorage.getItem("userid");
+			var truename=localStorage.getItem("truename");
+			var address=localStorage.getItem("address");
+			var tel=localStorage.getItem("tel");
+			console.log(userid);
+			document.getElementById("tbtruename").value=truename;
+			document.getElementById("tbaddress").value=address;
+			document.getElementById("tbtel").value=tel;
+			
+			mui.ajax(requrl,{
+					data:{
+						rnum:"6",
+						userid:userid
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/x-www-form-urlencoded'},
+					success:function(data){
+						var itembox = document.getElementById("itembox");
+						var itemlisthtml="";
+						var sumprice=0;
+						for (var i=0;i<data.length;i++) 
+						{
+							itemlisthtml+='<li class="mui-table-view-cell mui-media" id="'+data[i].proid+'">';
+							itemlisthtml+='<a href="javascript:void(0);">';
+							itemlisthtml+='<div class="mui-media-body">';
+							itemlisthtml+='<img class="mui-media-object mui-pull-left" src="http://49.235.71.166:8080/DimaoManage/upload/'+data[i].imgurl+'">';
+							itemlisthtml+= data[i].proname+'<div class="numbox"><span class="btnjian">-</span><input type="text" class="buynum" value="'+data[i].procount+'" style="padding: 2px;"/><span class="btnjia">+</span></div>'
+							itemlisthtml+='<p class="mui-ellipsis">价格：'+data[i].price+'元</p>';
+							itemlisthtml+='</div>';
+							itemlisthtml+=' </a>';					
+							itemlisthtml+='</li>';
+							sumprice+=parseInt(data[i].price)*parseInt(data[i].procount);
+						}
+						itembox.innerHTML=itemlisthtml;
+						document.getElementById("sumpricebox").innerHTML=sumprice;
+						if(data.length<1)
+						{
+							document.getElementById("itembox").innerHTML="购物车中暂无货品。";
+						}
+					}
+			});
+		}
+		
+		document.addEventListener('cardatainit', function() {
+			bindcardata();
+		});
+		
+		mui("#itembox").on("tap","span.btnjia",function(){
+			var that=this;
+			var v=that.parentNode.querySelector("input.buynum").value;
+			v=parseInt(v);
+			v=v+1;
+			var proid=that.parentNode.parentNode.parentNode.parentNode.getAttribute("id");
+			var userid=localStorage.getItem("userid");
+			var requrl=localStorage.getItem("requrl");
+			//var requrl="http://49.235.71.166:8080/DimaoManage/JavaApi";
+			
+			mui.ajax(requrl,{
+					data:{
+						rnum:"8",
+						userid:userid,
+						id:proid,
+						countvalue:v
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/x-www-form-urlencoded'},
+					success:function(data){
+						that.parentNode.querySelector("input.buynum").value=v;
+						bindcardata();
+					}
+			});
+			
+			
+		});
+		
+		mui("#itembox").on("tap","span.btnjian",function(){
+			var that=this;
+			var v=that.parentNode.querySelector("input.buynum").value;
+			v=parseInt(v);
+			v=v-1;
+			if(v<0)
+			{
+				v=0;
+			}
+			var proid=that.parentNode.parentNode.parentNode.parentNode.getAttribute("id");
+			var userid=localStorage.getItem("userid");
+			var requrl=localStorage.getItem("requrl");
+			//var requrl="http://49.235.71.166:8080/DimaoManage/JavaApi"
+			
+			if(v==0)
+			{
+				//删除
+				mui.ajax(requrl,{
+					data:{
+						rnum:"7",
+						userid:userid,
+						id:proid
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/x-www-form-urlencoded'},
+					success:function(data){
+						//console.log(JSON.stringify(data));
+						bindcardata();
+//						if(v==0)
+//						{
+//							document.getElementById("itembox").removeChild(that.parentNode.parentNode.parentNode.parentNode);
+//						}
+					}
+				});
+			}
+			else
+			{
+				//减少
+				mui.ajax(requrl,{
+					data:{
+						rnum:"8",
+						userid:userid,
+						id:proid,
+						countvalue:v
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/x-www-form-urlencoded'},
+					success:function(data){
+						//console.log(JSON.stringify(data));
+						//that.parentNode.querySelector("input.buynum").value=v;
+						bindcardata();
+					}
+				});
+				 
+			}
+			
+		});
+		
+		document.getElementById("btnaddorder").addEventListener("tap",function(e){
+			if(document.getElementById("itembox").innerHTML=="购物车中暂无货品。")
+			{
+				mui.toast("购物车中暂无货品,暂时不能下单!");
+				return;
+			}
+			var requrl=localStorage.getItem("requrl");
+			var userid=localStorage.getItem("userid");
+			mui.ajax(requrl,{
+					data:{
+						rnum:"9",
+						userid:userid,
+						tbname:document.getElementById("tbtruename").value,
+						tbtel:document.getElementById("tbtel").value,
+						tbaddress:document.getElementById("tbaddress").value,
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/x-www-form-urlencoded'},
+					success:function(data){
+						mui.toast("下单成功!");
+						document.getElementById("orderbox").className="hide";
+						setTimeout(function(){
+								mui.openWindow({
+									url:"myorderlist.html",
+									id:"myorderlist.html"
+								});
+						},500);
+					}
+			});
+		});
+		
+		
+		document.addEventListener('cardatainit', function() {
+			bindcardata();
+		});
+		
+    </script>
+	</body>
+
+</html>

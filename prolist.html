@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-object{
+				height: 120px;
+			}
+			#itembox{
+				overflow: auto;
+				width:calc(100% - 5px);
+				list-style: none;
+			}
+			#itembox li{
+				border: solid 1px #ccc;
+				margin-top: 5px;
+				width:calc(50% - 5px);
+				height:300px;
+				margin-left: 5px;
+				float: left;
+				text-align: center;
+				border-radius: 5px;
+				background-color: #fff;
+				padding-top: 20px;
+			}
+			#itembox li img{
+				height:150px;
+				width:120px;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<div class="mui-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul id="itembox">					
+						
+		    		</ul>
+				</div>
+			</div>		    
+		</div>
+		
+	<script src="js/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+      
+		mui('.mui-scroll-wrapper').scroll({
+			indicators: false, //是否显示滚动条
+			deceleration:0.00006, //阻尼系数,系数越小滑动越灵敏
+			bounce: true //是否启用回弹
+		});
+		
+		mui.ready(function(){
+			var requrl=localStorage.getItem("requrl");	
+			//var requrl="http://49.235.71.166:8080/DimaoManage/JavaApi"
+			console.log(requrl);
+			mui.ajax(requrl,{
+					data:{
+						rnum:"3"
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/x-www-form-urlencoded'},
+					success:function(data){
+						var itembox = document.getElementById("itembox");
+						console.log(JSON.stringify(data));
+						var itemlisthtml="";
+						for (var i=0;i<data.length;i++) 
+						{
+							itemlisthtml+='<li id="'+data[i].id+'">';
+							itemlisthtml+='<p><img class="mui-media-object" src="http://49.235.71.166:8080/DimaoManage/upload/'+data[i].imgurl+'"></p><p>'+data[i].proname+'</p><p>￥：'+data[i].price+'</p><p>'+data[i].brief+'</p>';
+							itemlisthtml+='</li>';
+						}
+						itembox.innerHTML=itemlisthtml;
+					}
+		});
+			
+		mui("#itembox").on("tap","li",function(){
+				var currentid=this.id;
+				console.log(currentid);
+				mui.openWindow({
+			    	url:"proview.html",
+			    	id:"proview.html",
+			    	extras:{
+					   proid:currentid
+					},
+				});
+				
+			});			
+		});
+		
+		
+    </script>
+	</body>
+
+</html>

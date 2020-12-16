@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			p.item{
+				border-bottom: dashed 1px #ccc;
+			}
+			.btn-addtocar{
+				width:calc(100% - 100px);
+				margin: 0 auto;
+				height:40px;
+				background-color: green;
+				color: #fff;
+				line-height: 40px;
+				text-align: center;
+				border-radius: 5px;
+			}
+			.btn-addtocar:active{
+				background-color: #ff6600;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">商品明细</h1>
+		</header>
+		<div class="mui-content">
+		    <div style="background-color:white;padding: 10px 0;"><img src="" id="proimg" style="width: 50%; margin: 0 auto; display: block;"/></div>
+		    <div style="padding: 10px;background-color:#eee; ">
+			    <p id="p1" class="item" style="font-size:18px;"></p>
+			    <p id="p2" class="item"></p>
+			    <p id="p3" class="item"></p>
+			    <p id="p4" class="item"></p>
+			    <p id="p5"></p>
+		    </div>
+		    <div class="btn-addtocar" id="btnaddtocar">加入购物车</div>
+		</div>
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				var proid = self.proid;
+			    var requrl=localStorage.getItem("requrl");	
+			    //var requrl="http://49.235.71.166:8080/DimaoManage/JavaApi"
+				mui.ajax(requrl,{
+					data:{
+						rnum:"4",
+                  		id:proid
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/x-www-form-urlencoded'},
+					success:function(data){
+						document.getElementById("proimg").src="http://49.235.71.166:8080/DimaoManage/upload/"+data.imgurl;
+						document.getElementById("p1").innerHTML=data.proname;
+						document.getElementById("p2").innerHTML=data.address;
+						document.getElementById("p3").innerHTML=data.price;
+						document.getElementById("p4").innerHTML=data.brief;
+						document.getElementById("p5").innerHTML=data.descriptions;						
+						console.log(JSON.stringify(data));
+						
+					}
+				});
+			});
+			
+			document.getElementById("btnaddtocar").addEventListener("tap",function(){
+				var self = plus.webview.currentWebview();
+				var proid = self.proid;
+				var userid=localStorage.getItem("userid");
+				var requrl=localStorage.getItem("requrl");
+				//var requrl="http://49.235.71.166:8080/DimaoManage/JavaApi"
+				mui.ajax(requrl,{
+					data:{
+						rnum:"5",
+						userid:userid,
+                  		proid:proid
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					headers:{'Content-Type':'application/x-www-form-urlencoded'},
+					success:function(data){
+						var car= plus.webview.getWebviewById("car.html");
+						var main =car.parent();
+						//触发主页面的gohome事件
+						mui.fire(main,'gocar');	
+						mui.fire(car,'cardatainit');
+						mui.back();
+						console.log(JSON.stringify(data));
+						
+						
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

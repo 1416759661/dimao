@@ -1,0 +1,170 @@
+{
+  "index.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "img/ppt02.png",
+      "img/ppt01.png",
+      "img/ppt03.png"
+    ],
+    "refer": [
+      "prolist.html",
+      "carlist.html",
+      "my.html"
+    ]
+  },
+  "login.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "index.html",
+      "prolist.html",
+      "my.html",
+      "carlist.html",
+      "reg.html",
+      "main.html"
+    ]
+  },
+  "carlist.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "my.html",
+      "prolist.html"
+    ]
+  },
+  "my.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "carlist.html",
+      "index.html",
+      "aboutus.html",
+      "myorderlist.html",
+      "login.html"
+    ]
+  },
+  "prolist.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "img/c2.jpg",
+      "img/c5.jpg",
+      "img/c1.jpg",
+      "img/c6.jpg",
+      "img/c3.jpg",
+      "img/c4.jpg"
+    ],
+    "refer": [
+      "index.html",
+      "my.html",
+      "carlist.html",
+      "proview.html"
+    ]
+  },
+  "main.html": {
+    "resources": [
+      "index.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/comm.css",
+      "fonts/mui-icons-extra.ttf",
+      "css/icons-extra.css"
+    ],
+    "refer": [
+      "index.html",
+      "my.html",
+      "prolist.html",
+      "carlist.html",
+      "car.html"
+    ]
+  },
+  "aboutus.html": {
+    "resources": [
+      "img/wxcode.png",
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "myorderlist.html": {
+    "resources": [
+      "img/user01.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "myorderview.html"
+    ]
+  },
+  "test.html": {
+    "resources": [
+      "1.mp4",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "reg.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ]
+  },
+  "proview.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "car.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "proview.html",
+      "myorderlist.html"
+    ]
+  },
+  "myorderview.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ]
+  },
+  "test1.html": {
+    "resources": [
+      "css/mui.css",
+      "fonts/mui.ttf",
+      "js/mui.js",
+      "img/c1.jpg"
+    ]
+  },
+  "test2.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "img/c1.jpg"
+    ]
+  }
+}

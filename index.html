@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+   
+    <link href="css/mui.min.css" rel="stylesheet"/>
+   
+    <style type="text/css">
+    	#slider img{
+    		width: 100%;
+    		height: 150px;
+    	}
+    	.searchbox{
+    		margin: 0 5px;
+    		padding-top: 5px;
+    		height: 50px;
+    	}
+    	.searchbox input{
+    		display: inline-block;
+    		height: 40px;
+    		
+    	}
+    	#tbkey{
+    		width:calc(100% - 83px);
+    	}
+    	
+    	#btnopt{
+    		width:80px;
+    		height:40px;
+    		margin-left: 3px;
+    	}
+    </style>
+</head>
+<body>
+	<div class="mui-content">
+		<div style="margin: 5px; margin-bottom: 0;">
+	    <div id="slider" class="mui-slider">
+	      <div class="mui-slider-group mui-slider-loop">
+	        <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+	        <div class="mui-slider-item mui-slider-item-duplicate">
+	          <a href="###">
+	            <img src="img/ppt03.png">
+	          </a>
+	        </div>
+	        <!-- 第一张 -->
+	        <div class="mui-slider-item">
+	          <a href="###">
+	            <img src="img/ppt01.png">
+	          </a>
+	        </div>
+	        <!-- 第二张 -->
+	        <div class="mui-slider-item">
+	          <a href="###">
+	            <img src="img/ppt02.png">
+	          </a>
+	        </div>
+	        <!-- 第三张 -->
+	        <div class="mui-slider-item">
+	          <a href="###">
+	            <img src="img/ppt03.png">
+	          </a>
+	        </div>	       
+	        <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+	        <div class="mui-slider-item mui-slider-item-duplicate">
+	          <a href="###">
+	            <img src="img/ppt01.png">
+	          </a>
+	        </div>
+	      </div>
+	      <div class="mui-slider-indicator">
+	        <div class="mui-indicator mui-active"></div>
+	        <div class="mui-indicator"></div>
+	        <div class="mui-indicator"></div>
+	      </div>
+	    </div>
+	    </div>
+	     <div class="searchbox">
+	        	<input type="text" name="tbkey" id="tbkey" value="" placeholder="ipone12" /><input type="button"  name="btnopt" id="btnopt" value="搜索" />
+	        </div>
+	    <ul class="mui-table-view mui-grid-view mui-grid-9">
+	    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-home"></span>
+	            <div class="mui-media-body">手机</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-email"></span>
+	            <div class="mui-media-body">电脑</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-chatbubble"></span>
+	            <div class="mui-media-body">电视机</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-location"></span>
+	            <div class="mui-media-body">洗衣机</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-search"></span>
+	            <div class="mui-media-body">空调</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-phone"></span>
+	            <div class="mui-media-body">电风扇</div>
+	        </a>
+	    </li>
+	     <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-location"></span>
+	            <div class="mui-media-body">洗衣机</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-search"></span>
+	            <div class="mui-media-body">空调</div>
+	        </a>
+	    </li>
+	    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+	        <a href="#">
+	            <span class="mui-icon mui-icon-phone"></span>
+	            <div class="mui-media-body">电风扇</div>
+	        </a>
+	    </li>
+	        </ul>
+	        
+	       
+	    
+	</div>
+	
+	 <script src="js/mui.min.js"></script>
+     <script type="text/javascript" charset="utf-8">
+      	
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+		
+//		var old_back = mui.back;
+//		mui.back = function(){
+//		  var btn = ["确定","取消"];
+//		  mui.confirm('确认关闭当前窗口？','Hello MUI',btn,function(e){
+//		    if(e.index==0){
+//		    	//执行mui封装好的窗口关闭逻辑；
+//		    	old_back();
+//		    }
+//		  });
+//		}
+		
+    </script>
+		
+</body>
+</html>
